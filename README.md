@@ -17,7 +17,7 @@ Note that this app is reachable with, but also without the region in the URL:
 - https://gcloud-issue-test-1.appspot.com/
 
 So far so good, now let's add a first static file:
-- Add the following section in `app.yaml`:
+- Add the following `handlers` section in `app.yaml`:
   ```
   handlers:
     - url: /favicon\.ico
@@ -29,12 +29,23 @@ So far so good, now let's add a first static file:
 - Use `gcloud app browse` and check if the new icon shows up.
 
 I needed a `shift-F5` for the icon to show up. Now let's add an html file:
-- To be continued ...
-
-
-
-
-
-
-
+- Modify the `handlers` section in `app.yaml`:
+  ```
+  handlers:
+    - url: /favicon\.ico
+      static_files: favicon.ico
+      upload: favicon\.ico
+    - url: /static
+      static_dir: static
+  ```
+- Create the `go-app/static` folder and create `go-app/static/index.html`:
+  ```
+  Hello, Static!
+  ```
+- After `gcloud app deploy` using `gcloud app browse` still showed the output
+  of this app _with_ the icon, even after a `shift-F5`.
+- And also https://gcloud-issue-test-1.ey.r.appspot.com/static/index.html
+  shows the contents of `go-app/static/index.html`
+  
+No issues yet, so for now I'll switch back to my real project and restart it ...
 
